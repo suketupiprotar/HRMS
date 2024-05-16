@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "Edit";
+}
+@using HRMSWithTheme.Models
+@model EmployeeMaster
+
+<h2 class="text-center">Edit</h2>
+<main class="d-flex justify-content-center">
+    @using (Html.BeginForm("Edit", "Employee", FormMethod.Post))
+    {
+        @Html.HiddenFor(x => x.EmployeeId)
+        @Html.HiddenFor(x => x.Email)
+        @Html.HiddenFor(x => x.Password)
+        @Html.HiddenFor(x => x.DepartmentId)
+        @Html.HiddenFor(x => x.ReportingPerson);
+        @Html.AntiForgeryToken();
+        @Html.LabelFor(x => x.FirstName, new { @class = "fw-bold" });
+        @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control" });
+        <br>
+        @Html.LabelFor(x => x.LastName, new { @class = "fw-bold" });
+        @Html.TextBoxFor(x => x.LastName, new { @class = "form-control", });
+        <br>
+        @Html.LabelFor(x => x.BirthDate, new { @class = "fw-bold" });
+        @Html.TextBoxFor(x => x.BirthDate, "{0:dd-MM-yyyy}", new { @class = "form-control", @type = "Date" });
+        <br>
+        @Html.LabelFor(x => x.Gender, new { @class = "fw-bold" })
+        <br>
+        @Html.RadioButtonFor(x => x.Gender, "Male", new { @class = "form-check-input" })
+        @Html.Label("Male", new { @class = "form-check-label" })
+
+        @Html.RadioButtonFor(x => x.Gender, "Female", new { @class = "form-check-input" })
+        @Html.Label("Female", new { @class = "form-check-label" })
+
+        @Html.RadioButtonFor(x => x.Gender, "Other", new { @class = "form-check-input" })
+        @Html.Label("Other", new { @class = "form-check-label" })
+        <br>
+        <button class="btn btn-primary" type="submit">Submit</button>
+        <a href="@Url.Action("Dashboard", "Employee")"><button class="btn btn-warning" type="button">Back</button></a>
+    }
+</main>
+
+

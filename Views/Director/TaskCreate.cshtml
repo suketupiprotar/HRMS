@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "TaskCreate";
+}
+@using HRMSWithTheme.Models
+@model TaskMaster
+<h2>TaskCreate</h2>
+
+<main class="d-flex justify-content-center">
+    @using (Html.BeginForm("TaskCreate", "Director", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken();
+        @Html.LabelFor(x => x.TaskName, new { @class = "fw-bold" });
+        @Html.TextBoxFor(x => x.TaskName, new { @class = "form-control" });
+        @Html.ValidationMessageFor(x => x.TaskName, "", new { @class = "text-danger" })
+        <br>
+        @Html.LabelFor(x => x.TaskDescription, new { @class = "fw-bold" });
+        @Html.TextAreaFor(x => x.TaskDescription, new { @class = "form-control" });
+        @Html.ValidationMessageFor(x => x.TaskDescription, "", new { @class = "text-danger" })
+
+        <br>
+        @Html.LabelFor(x => x.TaskDate, new { @class = "fw-bold" });
+        @Html.TextBoxFor(x => x.TaskDate, "{0:dd-MM-yyyy}", new { @class = "form-control", @type = "Date" });
+        @Html.ValidationMessageFor(x => x.TaskDate, "", new { @class = "text-danger" })
+        <br>
+        <button class="btn btn-primary">Submit</button>
+        <a href="@Url.Action("DirectorTask", "Director")"><button class="btn btn-warning" type="button">Back</button></a>
+    }
+</main>

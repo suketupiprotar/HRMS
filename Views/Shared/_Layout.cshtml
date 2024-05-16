@@ -1,0 +1,310 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/pluginsCSS")
+    @Styles.Render("~/Content/pluginCSSForThisPage")
+    @Styles.Render("~/Content/layoutStyles")
+    @Styles.Render("~/Content/datatableCSS")
+    <!-- SweetAlert CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
+    <!-- SweetAlert JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+</head>
+
+<body>
+    @Scripts.Render("~/bundles/preloader")
+    <div class="body-wrapper">
+        <!-- partial:partials/_sidebar.html -->
+        <aside class="mdc-drawer mdc-drawer--dismissible mdc-drawer--open">
+            <div class="mdc-drawer__header">
+                <a href="index.html" class="brand-logo">
+                    @*<img src="/assets/images/logo.svg" alt="logo">*@
+                    <img src="~/Content/assets/images/logo.svg" alt="logo">
+                </a>
+            </div>
+            <div class="mdc-drawer__content">
+                <div class="user-info">
+                    <p class="name">@Session["FullName"]</p>
+                    <p class="email">@Session["Email"]</p>
+                </div>
+                <div class="mdc-list-group">
+                    <nav class="mdc-list mdc-drawer-menu">
+                        @if (Convert.ToInt32(Session["department"]) == 1)
+                        {
+                            <div class="mdc-list-item mdc-drawer-item">
+
+                                <a class="mdc-drawer-link" href="@Url.Action("DashboardView", "Director")">
+                                    <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">home</i>
+                                    Dashboard
+                                </a>
+                            </div>
+                            <div class="mdc-list-item mdc-drawer-item">
+                                <a class="mdc-drawer-link" href="@Url.Action("GetTaskListView", "Director")">
+                                    <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">track_changes</i>
+                                    Task List
+                                </a>
+                            </div>
+                            <div class="mdc-list-item mdc-drawer-item">
+                                <a class="mdc-drawer-link" href="@Url.Action("DirectorTaskView", "Director")">
+                                    <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">track_changes</i>
+                                    Your Task List
+                                </a>
+                            </div>
+                        }
+                        else if (Convert.ToInt32(Session["department"]) == 2)
+                        {
+                            <div class="mdc-list-item mdc-drawer-item">
+
+                                <a class="mdc-drawer-link" href="@Url.Action("DashboardView", "Manager")">
+                                    <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">home</i>
+                                    Dashboard
+                                </a>
+                            </div>
+                            <div class="mdc-list-item mdc-drawer-item">
+                                <a class="mdc-drawer-link" href="@Url.Action("GetTaskListView", "Manager")">
+                                    <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">track_changes</i>
+                                    Task List
+                                </a>
+                            </div>
+                            <div class="mdc-list-item mdc-drawer-item">
+                                <a class="mdc-drawer-link" href="@Url.Action("ManagerTaskView", "Manager")">
+                                    <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">track_changes</i>
+                                    Your Task List
+                                </a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="mdc-list-item mdc-drawer-item">
+
+                                <a class="mdc-drawer-link" href="@Url.Action("DashboardView", "Employee")">
+                                    <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">home</i>
+                                    Dashboard
+                                </a>
+                            </div>
+                            <div class="mdc-list-item mdc-drawer-item">
+                                <a class="mdc-drawer-link" href="@Url.Action("EmployeeTaskView", "Employee")">
+                                    <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">track_changes</i>
+                                    Your Task List
+                                </a>
+                            </div>
+                        }
+                    </nav>
+                </div>
+
+            </div>
+        </aside>
+        <!-- partial -->
+        <div class="main-wrapper mdc-drawer-app-content">
+            <!-- partial:partials/_navbar.html -->
+            <header class="mdc-top-app-bar">
+                <div class="mdc-top-app-bar__row">
+                    <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+                        <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button sidebar-toggler">menu</button>
+                        <span class="mdc-top-app-bar__title">Greetings @Session["FullName"]</span>
+                        <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon search-text-field d-none d-md-flex">
+                            <i class="material-icons mdc-text-field__icon">search</i>
+                            <input class="mdc-text-field__input" id="text-field-hero-input">
+                            <div class="mdc-notched-outline">
+                                <div class="mdc-notched-outline__leading"></div>
+                                <div class="mdc-notched-outline__notch">
+                                    <label for="text-field-hero-input" class="mdc-floating-label">Search..</label>
+                                </div>
+                                <div class="mdc-notched-outline__trailing"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end mdc-top-app-bar__section-right">
+                        <div class="menu-button-container menu-profile d-none d-md-block">
+                            <button class="mdc-button mdc-menu-button">
+                                <span class="d-flex align-items-center">
+                                    <span class="figure">
+                                        @*<img src="../assets/images/faces/face1.jpg" alt="user" class="user">*@
+                                        <img src="~/Content/assets/images/faces/face1.jpg" alt="user" class="user">
+                                    </span>
+                                    <span class="user-name">@Session["FullName"]</span>
+                                </span>
+                            </button>
+                            <div class="mdc-menu mdc-menu-surface" tabindex="-1">
+                                <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical">
+                                    <li class="mdc-list-item" role="menuitem">
+                                        @if (Convert.ToInt32(Session["department"]) == 1)
+                                        {
+                                            <a @*href="@Url.Action("Edit", "Director", new { id =  (Convert.ToInt32(Session["EmployeeId"])) })"*@ data-id="@Convert.ToInt32(Session["EmployeeId"])" class="d-flex ownProfileEdit">
+                                                <div class="item-thumbnail item-thumbnail-icon-only">
+                                                    <i class="mdi mdi-account-edit-outline text-primary"></i>
+                                                </div>
+                                                <div class="item-content d-flex align-items-start flex-column justify-content-center">
+                                                    <h6 class="item-subject font-weight-normal">Edit profile</h6>
+                                                </div>
+                                            </a>
+                                        }
+                                        else if (Convert.ToInt32(Session["department"]) == 2)
+                                        {
+                                            <a @*href="@Url.Action("Edit", "Manager", new { id =  (Convert.ToInt32(Session["EmployeeId"])) })"*@ data-id="@Convert.ToInt32(Session["EmployeeId"])" class="d-flex ownProfileEdit">
+                                                <div class="item-thumbnail item-thumbnail-icon-only">
+                                                    <i class="mdi mdi-account-edit-outline text-primary"></i>
+                                                </div>
+                                                <div class="item-content d-flex align-items-start flex-column justify-content-center">
+                                                    <h6 class="item-subject font-weight-normal">Edit profile</h6>
+                                                </div>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a @*href="@Url.Action("Edit", "Employee", new { id =  (Convert.ToInt32(Session["EmployeeId"])) })"*@ data-id="@Convert.ToInt32(Session["EmployeeId"])" class="d-flex ownProfileEdit">
+                                                <div class="item-thumbnail item-thumbnail-icon-only">
+                                                    <i class="mdi mdi-account-edit-outline text-primary"></i>
+                                                </div>
+                                                <div class="item-content d-flex align-items-start flex-column justify-content-center">
+                                                    <h6 class="item-subject font-weight-normal">Edit profile</h6>
+                                                </div>
+                                            </a>
+                                        }
+                                    </li>
+                                    <li class="mdc-list-item" role="menuitem">
+                                        <a href="@Url.Action("Login", "Account")" class="d-flex">
+                                            <div class="item-thumbnail item-thumbnail-icon-only">
+                                                <i class="mdi mdi-settings-outline text-primary"></i>
+                                            </div>
+                                            <div class="item-content d-flex align-items-start flex-column justify-content-center">
+                                                <h6 class="item-subject font-weight-normal">
+                                                    LogOut
+                                                </h6>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="divider d-none d-md-block"></div>
+                        <div class="menu-button-container d-none d-md-block">
+                            <button class="mdc-button mdc-menu-button">
+                                <i class="mdi mdi-settings"></i>
+                            </button>
+                            <div class="mdc-menu mdc-menu-surface" tabindex="-1">
+                                <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical">
+                                    <li class="mdc-list-item" role="menuitem">
+                                        <div class="item-thumbnail item-thumbnail-icon-only">
+                                            <i class="mdi mdi-alert-circle-outline text-primary"></i>
+                                        </div>
+                                        <div class="item-content d-flex align-items-start flex-column justify-content-center">
+                                            <h6 class="item-subject font-weight-normal">Settings</h6>
+                                        </div>
+                                    </li>
+                                    <li class="mdc-list-item" role="menuitem">
+                                        <div class="item-thumbnail item-thumbnail-icon-only">
+                                            <i class="mdi mdi-progress-download text-primary"></i>
+                                        </div>
+                                        <div class="item-content d-flex align-items-start flex-column justify-content-center">
+                                            <h6 class="item-subject font-weight-normal">Update</h6>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="menu-button-container">
+                            <button class="mdc-button mdc-menu-button">
+                                <i class="mdi mdi-bell"></i>
+                            </button>
+                            <div class="mdc-menu mdc-menu-surface" tabindex="-1">
+                                <h6 class="title"> <i class="mdi mdi-bell-outline mr-2 tx-16"></i> Notifications</h6>
+                                <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical">
+                                    <li class="mdc-list-item" role="menuitem">
+                                        <div class="item-thumbnail item-thumbnail-icon">
+                                            <i class="mdi mdi-email-outline"></i>
+                                        </div>
+                                        <div class="item-content d-flex align-items-start flex-column justify-content-center">
+                                            <h6 class="item-subject font-weight-normal">You received a new message</h6>
+                                            <small class="text-muted"> 6 min ago </small>
+                                        </div>
+                                    </li>
+                                    <li class="mdc-list-item" role="menuitem">
+                                        <div class="item-thumbnail item-thumbnail-icon">
+                                            <i class="mdi mdi-account-outline"></i>
+                                        </div>
+                                        <div class="item-content d-flex align-items-start flex-column justify-content-center">
+                                            <h6 class="item-subject font-weight-normal">New user registered</h6>
+                                            <small class="text-muted"> 15 min ago </small>
+                                        </div>
+                                    </li>
+                                    <li class="mdc-list-item" role="menuitem">
+                                        <div class="item-thumbnail item-thumbnail-icon">
+                                            <i class="mdi mdi-alert-circle-outline"></i>
+                                        </div>
+                                        <div class="item-content d-flex align-items-start flex-column justify-content-center">
+                                            <h6 class="item-subject font-weight-normal">System Alert</h6>
+                                            <small class="text-muted"> 2 days ago </small>
+                                        </div>
+                                    </li>
+                                    <li class="mdc-list-item" role="menuitem">
+                                        <div class="item-thumbnail item-thumbnail-icon">
+                                            <i class="mdi mdi-update"></i>
+                                        </div>
+                                        <div class="item-content d-flex align-items-start flex-column justify-content-center">
+                                            <h6 class="item-subject font-weight-normal">You have a new update</h6>
+                                            <small class="text-muted"> 3 days ago </small>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!-- partial -->
+            <div class="page-wrapper mdc-toolbar-fixed-adjust">
+                @RenderBody()
+                <!-- partial:partials/_footer.html -->
+                @*<footer>
+            <div class="mdc-layout-grid">
+                <div class="mdc-layout-grid__inner">
+                    <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                        <span class="text-center text-sm-left d-block d-sm-inline-block tx-14">Copyright © <a href="#">All rights are reserved </a>@DateTime.Now.Year</span>
+                    </div>
+
+                </div>
+            </div>
+        </footer>*@
+                <!-- partial -->
+
+                @*Modal*@
+                <div class="modal fade" id="ownProfileModal" tabindex="-1" aria-labelledby="ownProfileModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="ownProfileModalLabel">Add Task</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body" id="ownProfileModalBody">
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/pluginJs")
+    @Scripts.Render("~/bundles/pluginJsForThisPage")
+    @Scripts.Render("~/bundles/injectJs")
+    @Scripts.Render("~/bundles/customJs")
+    @Scripts.Render("~/bundles/datatableJS")
+    @Scripts.Render("~/bundles/jqueryval")
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

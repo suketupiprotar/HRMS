@@ -1,0 +1,32 @@
+﻿@using HRMSWithTheme.Models
+@model TaskMaster
+
+<main class="d-flex justify-content-center">
+    @using (Html.BeginForm("", "", FormMethod.Post, new { @id = "taskForm" }))
+    {
+        @*@Html.AntiForgeryToken();*@
+        @*<input type="hidden" class="form-control form-control-lg" id="TaskId" name="TaskId" value="@Model.TaskId" placeholder="Empmloyee Code">*@
+        @Html.HiddenFor(x => x.TaskId);
+        @Html.HiddenFor(x => x.EmployeeId);
+            @Html.HiddenFor(x => x.Status);
+            @Html.HiddenFor(x => x.ApprovedorRejectedBy);
+            @Html.HiddenFor(x => x.ApprovedorRejectedOn);
+            @Html.HiddenFor(x => x.ApproverId);
+            @Html.HiddenFor(x => x.CreatedOn);
+            @Html.HiddenFor(x => x.ModifiedOn);
+        @Html.LabelFor(x => x.TaskName, new { @class = "fw-bold" });
+        @Html.TextBoxFor(x => x.TaskName, new { @class = "form-control" });
+        @Html.ValidationMessageFor(x => x.TaskName, "", new { @class = "text-danger" })
+        <br>
+        @Html.LabelFor(x => x.TaskDescription, new { @class = "fw-bold" });
+        @Html.TextAreaFor(x => x.TaskDescription, new { @class = "form-control" });
+        @Html.ValidationMessageFor(x => x.TaskDescription, "", new { @class = "text-danger" })
+
+        <br>
+        @Html.LabelFor(x => x.TaskDate, new { @class = "fw-bold" });
+        @Html.TextBoxFor(x => x.TaskDate, "{0:dd-MM-yyyy}", new { @class = "form-control", @type = "Date" });
+        @Html.ValidationMessageFor(x => x.TaskDate, "", new { @class = "text-danger" })
+        <br>
+        <button class="btn btn-primary" type="submit">Submit</button>
+    }
+</main>

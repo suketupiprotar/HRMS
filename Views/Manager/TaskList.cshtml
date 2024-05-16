@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewBag.Title = "TaskList";
+}
+@using HRMSWithTheme.Models
+@model List<TaskMaster>
+
+
+<main class="content-wrapper">
+    <div class="mdc-layout-grid">
+        <div class="mdc-layout-grid__inner">
+            <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+                <div class="mdc-card p-0">
+                    <h2 class="card-padding pb-0 text-center ">Task List Of Your Employees</h2>
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped" id="ManagerTaskList">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Task Id</th>
+                                    <th scope="col">Task Date</th>
+                                    <th scope="col">Employee Id</th>
+                                    <th scope="col">Task Name</th>
+                                    <th scope="col">Task Description</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Created On</th>
+                                    <th scope="col">Modified On</th>
+                                    <th scope="col">Approved or Rejected By</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+</main>
+
+
+@section scripts{
+    <script></script>
+    <script src="~/Scripts/CustomJs/Manager/ManagerTaskList.js"></script>
+    <script src="~/Scripts/CustomJs/Manager/ProfileEdit.js"></script>
+}
+

@@ -1,0 +1,40 @@
+﻿ 
+@{
+    ViewBag.Title = "TaskCreate";
+}@using HRMSWithTheme.Models
+@model TaskMaster
+
+<h2 class="text-center">Your Task Edit</h2>
+
+<main class="d-flex justify-content-center">
+    @using (Html.BeginForm("ManagerTaskEdit", "Manager", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken();
+        @Html.HiddenFor(x => x.TaskId);
+        @Html.HiddenFor(x => x.EmployeeId);
+        @Html.HiddenFor(x => x.Status);
+        @Html.HiddenFor(x => x.ApprovedorRejectedBy);
+        @Html.HiddenFor(x => x.ApprovedorRejectedOn);
+        @Html.HiddenFor(x => x.ApproverId);
+        @Html.HiddenFor(x => x.CreatedOn);
+        @Html.HiddenFor(x => x.ModifiedOn);
+        @Html.LabelFor(x => x.TaskName, new { @class = "fw-bold" });
+        @Html.TextBoxFor(x => x.TaskName, new { @class = "form-control" });
+        @Html.ValidationMessageFor(x => x.TaskName, "", new { @class = "text-danger" })
+
+        <br>
+        @Html.LabelFor(x => x.TaskDescription, new { @class = "fw-bold" });
+        @Html.TextAreaFor(x => x.TaskDescription, new { @class = "form-control" });
+        @Html.ValidationMessageFor(x => x.TaskDescription, "", new { @class = "text-danger" })
+
+        <br>
+        @Html.LabelFor(x => x.TaskDate, new { @class = "fw-bold" });
+        @Html.TextBoxFor(x => x.TaskDate, new { @class = "form-control", @type = "Date" });
+        @Html.ValidationMessageFor(x => x.TaskDate, "", new { @class = "text-danger" })
+
+        <br>
+        <button class="btn btn-primary">Submit</button>
+        <a href="@Url.Action("ManagerTask", "Manager")"><button class="btn btn-warning" type="button">Back</button></a>
+    }
+</main>
+

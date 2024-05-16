@@ -1,0 +1,119 @@
+﻿
+@{
+    ViewBag.Title = "TaskList";
+}
+@using HRMSWithTheme.Models
+@model List<TaskMaster>
+
+
+<main class="content-wrapper">
+    <div class="mdc-layout-grid">
+        <div class="mdc-layout-grid__inner">
+            <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+                <div class="mdc-card p-0">
+                    <h2 class="card-padding pb-0 text-center ">Task List Of Your Employees</h2>
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped" id="managerChildTable">
+                            <thead>
+                                <tr>
+                                    <th>Task Id</th>
+                                    <th>Employee Id</th>
+                                    <th>Task Name</th>
+                                    <th>Task Description</th>
+                                    <th>Status</th>
+                                    <th>Created On</th>
+                                    <th>Modified O</th>
+                                    <th>Approve or Rejected By</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var i in Model)
+                                {
+                                    <tr>
+                                        <td>@i.TaskId</td>
+                                        <td>@i.EmployeeId</td>
+                                        <td>@i.TaskName</td>
+                                        <td>@i.TaskDescription</td>
+                                        @*<td>@(string.IsNullOrEmpty(i.Status) ? "Pending" : i.Status)</td>*@
+                                        <td>
+                                            @{
+                                                string badgeClass = "";
+                                                string status = (i.Status).Trim();
+                                                if (status != "Approve" && status != "Reject")
+                                                {
+                                                    status = "Pending";
+                                                }
+                                                switch (status)
+                                                {
+                                                    case "Approve":
+                                                        badgeClass = "badge text-bg-success";
+                                                        break;
+                                                    case "Reject":
+                                                        badgeClass = "badge text-bg-danger";
+                                                        break;
+                                                    default:
+                                                        badgeClass = "badge text-bg-warning";
+                                                        break;
+                                                }
+                                            }
+                                            <span class="@badgeClass">@i.Status</span>
+                                        </td>
+                                        <td>@i.CreatedOn</td>
+                                        <td>@i.ModifiedOn</td>
+                                        @*<td>@i.ApprovedorRejectedBy</td>*@
+                                        @if (i.EmployeeMaster1 == null)
+                                        {
+                                            <td>Pending</td>
+                                        }
+                                        else
+                                        {
+                                            <td>@i.EmployeeMaster1.FirstName @i.EmployeeMaster1.LastName</td>
+                                        }
+                                        @*<td>
+            <a href="@Url.Action("TaskList", "Manager", new { id = i.TaskId })"><button class="btn btn-success gap-3 accept" data-id="@i.TaskId">Approve</button></a>
+            <a href="@Url.Action("TaskList", "Manager", new { id = i.TaskId })"><button class="btn btn-danger reject" data-id="@i.TaskId">Reject</button></a>
+        </td>*@
+                                        <td>
+                                            <a href="@Url.Action("TaskList", "Manager", new { id = i.TaskId })">
+                                                <button class="btn btn-success gap-3 accept" data-id="@i.TaskId" @(i.Status.Trim().Equals("Reject", StringComparison.OrdinalIgnoreCase) ? "disabled" : "")>Approve</button>
+                                            </a>
+                                            <a href="@Url.Action("TaskList", "Manager", new { id = i.TaskId })"><button class="btn btn-danger reject" data-id="@i.TaskId">Reject</button></a>
+                                        </td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</main>
+
+
+@section scripts{
+    <script>
+        $(document).ready(function() {
+            $(".accept, .reject").on("click", function () {
+                var taskId = $(this).data("id");
+                var status = $(this).text().trim();
+                $.ajax({
+                    type: 'POST',
+                    data: { taskId: taskId, status: status },
+                    url: '@Url.Action("TaskList", "Manager")',
+                    success: function (response) {
+                        if (response.success) {
+                        window.location.href = '@Url.Action("childTask", "Manager")';
+                        }
+                    }
+                });
+            });
+        });
+
+        var table = new DataTable("#managerChildTable");
+    </script>
+}
