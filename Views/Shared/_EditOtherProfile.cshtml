@@ -1,0 +1,57 @@
+﻿@using HRMSWithTheme.Models
+@model EmployeeMaster
+
+
+<main class="d-flex justify-content-center">
+    @using (Html.BeginForm("", "", FormMethod.Post, new {@id= "profileForm" }))
+    {
+        @Html.HiddenFor(x => x.EmployeeId)
+        @Html.HiddenFor(x => x.Email)
+        @Html.HiddenFor(x => x.Password)
+        @Html.AntiForgeryToken()
+
+        <label class="fw-bold">First Name</label>
+        @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control" })
+        <br />
+
+        <label class="fw-bold">Last Name</label>
+        @Html.TextBoxFor(x => x.LastName, new { @class = "form-control" })
+        <br />
+
+        <label class="fw-bold">Birth Date</label>
+        @Html.TextBoxFor(x => x.BirthDate, "{0:dd-MM-yyyy}", new { @class = "form-control", @type = "date" })
+        <br />
+
+        <label class="fw-bold">Gender</label>
+        <br />
+        <label>
+            @Html.RadioButtonFor(x => x.Gender, "Male", new { @class = "form-check-input" })
+            Male
+        </label>
+        <label>
+            @Html.RadioButtonFor(x => x.Gender, "Female", new { @class = "form-check-input" })
+            Female
+        </label>
+        <label>
+            @Html.RadioButtonFor(x => x.Gender, "Other", new { @class = "form-check-input" })
+            Other
+        </label>
+        <br />
+
+        <label class="fw-bold">Department</label>
+        <br />
+        @Html.DropDownListFor(m => m.DepartmentId, new List<SelectListItem>
+        {
+            new SelectListItem { Text = "Manager", Value = "2" },
+            new SelectListItem { Text = "Employee", Value = "3", Selected = true }
+        }, "Select Department", new { @class = "form-control" })
+        <br />
+
+        @Html.LabelFor(x => x.ReportingPerson, new { @class = "fw-bold" });
+        @Html.DropDownListFor(x => x.ReportingPerson, new SelectList(ViewBag.EmployeeList, "EmployeeId", "FirstName"), "Select Reporting Person", new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.ReportingPerson, "", new { @class = "text-danger" })
+        <br />
+
+        <button class="btn btn-primary" @*type="submit"*@>Submit</button>
+    }
+</main>

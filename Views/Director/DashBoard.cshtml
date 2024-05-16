@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "DashBoard";
+}
+@using HRMSWithTheme.Models
+@model List<EmployeeMaster>
+
+
+
+
+<main class="content-wrapper">
+    <div class="mdc-layout-grid">
+        <div class="mdc-layout-grid__inner">
+            <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+                <div class="mdc-card p-0">
+                    <h2 class="card-padding pb-0 text-center ">DashBoard</h2>
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped" id="directorDashboard">
+                            <thead>
+                                <tr>
+                                    <th>Employee Id</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Email</th>
+                                    <th>BirthDate</th>
+                                    <th>Gender</th>
+                                    <th>Department Id</th>
+                                    <th>Reporting Person</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                    <th>Task</th>
+                                </tr>
+                            </thead>
+                            
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*Modal*@
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Task</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalBody">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+@section scripts
+{
+        <script src="~/Scripts/CustomJs/DirectorDashboard.js"></script>
+}

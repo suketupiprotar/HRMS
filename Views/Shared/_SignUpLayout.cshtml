@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/pluginsCSS")
+    @Styles.Render("~/Content/pluginCSSForThisPage")
+
+</head>
+<body>
+    @RenderBody()
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/pluginJs")
+    @Scripts.Render("~/bundles/pluginJsForThisPage")
+    @Scripts.Render("~/bundles/injectJs")
+    @Scripts.Render("~/bundles/customJs")
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

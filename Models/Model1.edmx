@@ -1,0 +1,336 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="suketuModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DepartmentMaster">
+          <Key>
+            <PropertyRef Name="DepartmentId" />
+          </Key>
+          <Property Name="DepartmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepartmentName" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmployeeMaster">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="EmployeeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="BirthDate" Type="date" Nullable="false" />
+          <Property Name="Gender" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="DepartmentId" Type="int" />
+          <Property Name="ReportingPerson" Type="int" />
+        </EntityType>
+        <EntityType Name="TaskMaster">
+          <Key>
+            <PropertyRef Name="TaskId" />
+          </Key>
+          <Property Name="TaskId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TaskDate" Type="date" />
+          <Property Name="EmployeeId" Type="int" />
+          <Property Name="TaskName" Type="varchar" MaxLength="50" />
+          <Property Name="TaskDescription" Type="varchar" MaxLength="200" />
+          <Property Name="ApproverId" Type="int" />
+          <Property Name="ApprovedorRejectedBy" Type="int" />
+          <Property Name="ApprovedorRejectedOn" Type="date" />
+          <Property Name="Status" Type="char" MaxLength="15" />
+          <Property Name="CreatedOn" Type="date" />
+          <Property Name="ModifiedOn" Type="date" />
+        </EntityType>
+        <Association Name="FK__EmployeeM__Depar__123EB7A3">
+          <End Role="DepartmentMaster" Type="Self.DepartmentMaster" Multiplicity="0..1" />
+          <End Role="EmployeeMaster" Type="Self.EmployeeMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartmentMaster">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="EmployeeMaster">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EmployeeM__Repor__1332DBDC">
+          <End Role="EmployeeMaster" Type="Self.EmployeeMaster" Multiplicity="0..1" />
+          <End Role="EmployeeMaster1" Type="Self.EmployeeMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeMaster">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="EmployeeMaster1">
+              <PropertyRef Name="ReportingPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TaskMaste__Appro__17036CC0">
+          <End Role="EmployeeMaster" Type="Self.EmployeeMaster" Multiplicity="0..1" />
+          <End Role="TaskMaster" Type="Self.TaskMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeMaster">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="TaskMaster">
+              <PropertyRef Name="ApproverId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TaskMaste__Appro__17F790F9">
+          <End Role="EmployeeMaster" Type="Self.EmployeeMaster" Multiplicity="0..1" />
+          <End Role="TaskMaster" Type="Self.TaskMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeMaster">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="TaskMaster">
+              <PropertyRef Name="ApprovedorRejectedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TaskMaste__Emplo__160F4887">
+          <End Role="EmployeeMaster" Type="Self.EmployeeMaster" Multiplicity="0..1" />
+          <End Role="TaskMaster" Type="Self.TaskMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeMaster">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="TaskMaster">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="suketuModelStoreContainer">
+          <EntitySet Name="DepartmentMaster" EntityType="Self.DepartmentMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeMaster" EntityType="Self.EmployeeMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TaskMaster" EntityType="Self.TaskMaster" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__EmployeeM__Depar__123EB7A3" Association="Self.FK__EmployeeM__Depar__123EB7A3">
+            <End Role="DepartmentMaster" EntitySet="DepartmentMaster" />
+            <End Role="EmployeeMaster" EntitySet="EmployeeMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EmployeeM__Repor__1332DBDC" Association="Self.FK__EmployeeM__Repor__1332DBDC">
+            <End Role="EmployeeMaster" EntitySet="EmployeeMaster" />
+            <End Role="EmployeeMaster1" EntitySet="EmployeeMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TaskMaste__Appro__17036CC0" Association="Self.FK__TaskMaste__Appro__17036CC0">
+            <End Role="EmployeeMaster" EntitySet="EmployeeMaster" />
+            <End Role="TaskMaster" EntitySet="TaskMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TaskMaste__Appro__17F790F9" Association="Self.FK__TaskMaste__Appro__17F790F9">
+            <End Role="EmployeeMaster" EntitySet="EmployeeMaster" />
+            <End Role="TaskMaster" EntitySet="TaskMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TaskMaste__Emplo__160F4887" Association="Self.FK__TaskMaste__Emplo__160F4887">
+            <End Role="EmployeeMaster" EntitySet="EmployeeMaster" />
+            <End Role="TaskMaster" EntitySet="TaskMaster" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="suketuModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DepartmentMaster">
+          <Key>
+            <PropertyRef Name="DepartmentId" />
+          </Key>
+          <Property Name="DepartmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepartmentName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="EmployeeMasters" Relationship="Self.FK__EmployeeM__Depar__123EB7A3" FromRole="DepartmentMaster" ToRole="EmployeeMaster" />
+        </EntityType>
+        <EntityType Name="EmployeeMaster">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BirthDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Gender" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="DepartmentId" Type="Int32" />
+          <Property Name="ReportingPerson" Type="Int32" />
+          <NavigationProperty Name="DepartmentMaster" Relationship="Self.FK__EmployeeM__Depar__123EB7A3" FromRole="EmployeeMaster" ToRole="DepartmentMaster" />
+          <NavigationProperty Name="EmployeeMaster1" Relationship="Self.FK__EmployeeM__Repor__1332DBDC" FromRole="EmployeeMaster" ToRole="EmployeeMaster1" />
+          <NavigationProperty Name="EmployeeMaster2" Relationship="Self.FK__EmployeeM__Repor__1332DBDC" FromRole="EmployeeMaster1" ToRole="EmployeeMaster" />
+          <NavigationProperty Name="TaskMasters" Relationship="Self.FK__TaskMaste__Appro__17036CC0" FromRole="EmployeeMaster" ToRole="TaskMaster" />
+          <NavigationProperty Name="TaskMasters1" Relationship="Self.FK__TaskMaste__Appro__17F790F9" FromRole="EmployeeMaster" ToRole="TaskMaster" />
+          <NavigationProperty Name="TaskMasters2" Relationship="Self.FK__TaskMaste__Emplo__160F4887" FromRole="EmployeeMaster" ToRole="TaskMaster" />
+        </EntityType>
+        <EntityType Name="TaskMaster">
+          <Key>
+            <PropertyRef Name="TaskId" />
+          </Key>
+          <Property Name="TaskId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TaskDate" Type="DateTime" Precision="0" />
+          <Property Name="EmployeeId" Type="Int32" />
+          <Property Name="TaskName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TaskDescription" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ApproverId" Type="Int32" />
+          <Property Name="ApprovedorRejectedBy" Type="Int32" />
+          <Property Name="ApprovedorRejectedOn" Type="DateTime" Precision="0" />
+          <Property Name="Status" Type="String" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="0" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="EmployeeMaster" Relationship="Self.FK__TaskMaste__Appro__17036CC0" FromRole="TaskMaster" ToRole="EmployeeMaster" />
+          <NavigationProperty Name="EmployeeMaster1" Relationship="Self.FK__TaskMaste__Appro__17F790F9" FromRole="TaskMaster" ToRole="EmployeeMaster" />
+          <NavigationProperty Name="EmployeeMaster2" Relationship="Self.FK__TaskMaste__Emplo__160F4887" FromRole="TaskMaster" ToRole="EmployeeMaster" />
+        </EntityType>
+        <Association Name="FK__EmployeeM__Depar__123EB7A3">
+          <End Role="DepartmentMaster" Type="Self.DepartmentMaster" Multiplicity="0..1" />
+          <End Role="EmployeeMaster" Type="Self.EmployeeMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartmentMaster">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="EmployeeMaster">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EmployeeM__Repor__1332DBDC">
+          <End Role="EmployeeMaster" Type="Self.EmployeeMaster" Multiplicity="0..1" />
+          <End Role="EmployeeMaster1" Type="Self.EmployeeMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeMaster">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="EmployeeMaster1">
+              <PropertyRef Name="ReportingPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TaskMaste__Appro__17036CC0">
+          <End Role="EmployeeMaster" Type="Self.EmployeeMaster" Multiplicity="0..1" />
+          <End Role="TaskMaster" Type="Self.TaskMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeMaster">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="TaskMaster">
+              <PropertyRef Name="ApproverId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TaskMaste__Appro__17F790F9">
+          <End Role="EmployeeMaster" Type="Self.EmployeeMaster" Multiplicity="0..1" />
+          <End Role="TaskMaster" Type="Self.TaskMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeMaster">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="TaskMaster">
+              <PropertyRef Name="ApprovedorRejectedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TaskMaste__Emplo__160F4887">
+          <End Role="EmployeeMaster" Type="Self.EmployeeMaster" Multiplicity="0..1" />
+          <End Role="TaskMaster" Type="Self.TaskMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeMaster">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="TaskMaster">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="suketuEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DepartmentMasters" EntityType="Self.DepartmentMaster" />
+          <EntitySet Name="EmployeeMasters" EntityType="Self.EmployeeMaster" />
+          <EntitySet Name="TaskMasters" EntityType="Self.TaskMaster" />
+          <AssociationSet Name="FK__EmployeeM__Depar__123EB7A3" Association="Self.FK__EmployeeM__Depar__123EB7A3">
+            <End Role="DepartmentMaster" EntitySet="DepartmentMasters" />
+            <End Role="EmployeeMaster" EntitySet="EmployeeMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EmployeeM__Repor__1332DBDC" Association="Self.FK__EmployeeM__Repor__1332DBDC">
+            <End Role="EmployeeMaster" EntitySet="EmployeeMasters" />
+            <End Role="EmployeeMaster1" EntitySet="EmployeeMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TaskMaste__Appro__17036CC0" Association="Self.FK__TaskMaste__Appro__17036CC0">
+            <End Role="EmployeeMaster" EntitySet="EmployeeMasters" />
+            <End Role="TaskMaster" EntitySet="TaskMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TaskMaste__Appro__17F790F9" Association="Self.FK__TaskMaste__Appro__17F790F9">
+            <End Role="EmployeeMaster" EntitySet="EmployeeMasters" />
+            <End Role="TaskMaster" EntitySet="TaskMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TaskMaste__Emplo__160F4887" Association="Self.FK__TaskMaste__Emplo__160F4887">
+            <End Role="EmployeeMaster" EntitySet="EmployeeMasters" />
+            <End Role="TaskMaster" EntitySet="TaskMasters" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="suketuModelStoreContainer" CdmEntityContainer="suketuEntities">
+          <EntitySetMapping Name="DepartmentMasters">
+            <EntityTypeMapping TypeName="suketuModel.DepartmentMaster">
+              <MappingFragment StoreEntitySet="DepartmentMaster">
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeMasters">
+            <EntityTypeMapping TypeName="suketuModel.EmployeeMaster">
+              <MappingFragment StoreEntitySet="EmployeeMaster">
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="ReportingPerson" ColumnName="ReportingPerson" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaskMasters">
+            <EntityTypeMapping TypeName="suketuModel.TaskMaster">
+              <MappingFragment StoreEntitySet="TaskMaster">
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="TaskDate" ColumnName="TaskDate" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="TaskName" ColumnName="TaskName" />
+                <ScalarProperty Name="TaskDescription" ColumnName="TaskDescription" />
+                <ScalarProperty Name="ApproverId" ColumnName="ApproverId" />
+                <ScalarProperty Name="ApprovedorRejectedBy" ColumnName="ApprovedorRejectedBy" />
+                <ScalarProperty Name="ApprovedorRejectedOn" ColumnName="ApprovedorRejectedOn" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "Edit";
+}
+@using HRMSWithTheme.Models
+@model EmployeeMaster
+<h2>Edit</h2>
+
+<main class="d-flex justify-content-center">
+    @using (Html.BeginForm("Edit", "Director", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken();
+        @Html.HiddenFor(x => x.EmployeeId)
+        @Html.HiddenFor(x => x.Email)
+        @Html.HiddenFor(x => x.Password)
+        @Html.LabelFor(x => x.FirstName, new { @class = "fw-bold" });
+        @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control" });
+        @Html.ValidationMessageFor(x => x.FirstName, "", new { @class = "text-danger" })
+        <br>
+        @Html.LabelFor(x => x.LastName, new { @class = "fw-bold" });
+        @Html.TextBoxFor(x => x.LastName, new { @class = "form-control", });
+        @Html.ValidationMessageFor(x => x.LastName, "", new { @class = "text-danger" })
+        <br>
+        @Html.LabelFor(x => x.BirthDate, new { @class = "fw-bold" });
+        @Html.TextBoxFor(x => x.BirthDate, "{0:dd-MM-yyyy}", new { @class = "form-control", @type = "Date" });
+        @Html.ValidationMessageFor(x => x.BirthDate, "", new { @class = "text-danger" })
+        <br>
+        @Html.LabelFor(x => x.Gender, new { @class = "fw-bold" })
+        <br>
+        @Html.RadioButtonFor(x => x.Gender, "Male", new { @class = "form-check-input" })
+        @Html.Label("Male", new { @class = "form-check-label" })
+
+        @Html.RadioButtonFor(x => x.Gender, "Female", new { @class = "form-check-input" })
+        @Html.Label("Female", new { @class = "form-check-label" })
+
+        @Html.RadioButtonFor(x => x.Gender, "Other", new { @class = "form-check-input" })
+        @Html.Label("Other", new { @class = "form-check-label" })
+        @Html.ValidationMessageFor(x => x.Gender, "", new { @class = "text-danger" })
+        <br>
+        @Html.LabelFor(x => x.DepartmentId, new { @class = "fw-bold" });
+        @Html.ValidationMessageFor(x => x.DepartmentId, "", new { @class = "text-danger" })
+        @Html.DropDownListFor(m => m.DepartmentId, new List<SelectListItem>
+{
+  new SelectListItem { Text = "Director", Value = "1" },
+  new SelectListItem { Text = "Manager", Value = "2" },
+  new SelectListItem { Text = "Employee", Value = "3",Selected = true }
+}, "Type", new { @class = "form-control" })
+        <br>
+        @*@Html.LabelFor(x => x.ReportingPerson, new { @class = "fw-bold" });
+            @Html.TextBoxFor(x => x.ReportingPerson, new { @class = "form-control" });
+            @Html.ValidationMessageFor(x => x.ReportingPerson, "", new { @class = "text-danger" })*@
+        @Html.LabelFor(x => x.ReportingPerson, new { @class = "fw-bold" });
+        @Html.DropDownListFor(x => x.ReportingPerson, new SelectList(ViewBag.EmployeeList, "EmployeeId", "FirstName"), "Select Reporting Person", new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.ReportingPerson, "", new { @class = "text-danger" })
+        <br>
+        <button class="btn btn-primary" type="submit">Submit</button>
+        <a href="@Url.Action("Dashboard", "Director")" ><button class="btn btn-warning" type="button">Back</button></a>
+    }
+
+</main>
