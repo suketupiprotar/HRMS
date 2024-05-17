@@ -119,7 +119,7 @@ namespace HRMSWithTheme.Controllers
         public ActionResult Edit(int id)
         {
             var sid = Convert.ToInt32(Session["EmployeeId"]);
-           
+
             //ViewBag.EmployeeList = entity.EmployeeMasters.ToList();
             EmployeeMaster emp = entity.EmployeeMasters.Find(id);
             List<EmployeeMaster> employeeList = entity.EmployeeMasters
@@ -132,8 +132,8 @@ namespace HRMSWithTheme.Controllers
             }
             else
             {
-                ViewBag.EmployeeList = employeeList;
-                return PartialView("_EditOtherProfile", emp);
+            ViewBag.EmployeeList = employeeList;
+            return PartialView("_EditOtherProfile", emp);
             }
 
 
@@ -215,6 +215,23 @@ namespace HRMSWithTheme.Controllers
                 string orderDir = Request.Form["order[0][dir]"];
                 var abcd = Request.Form["order[1]"];
 
+                //var tasks = entity.TaskMasters.Where(x => x.EmployeeId != empId);
+
+        //        Dictionary<int, string> columnMapping = new Dictionary<int, string>
+        //{
+        //    {0, "TaskId"},
+        //    {1, "TaskDate"},
+        //    {2, "EmployeeId"},
+        //    {3, "TaskName"},
+        //    {4, "TaskDescription"},
+        //    {5, "Status"},
+        //    {6, "CreatedOn"},
+        //    {7, "ModifiedOn"},
+        //    {8, "ApprovedorRejectedBy"}
+        //};
+
+        //        // Get the property name for the column being sorted
+        //        string orderBy = columnMapping[int.Parse(orderColumn)];
 
                 var data = entity.TaskMasters.ToList().Where(x=>x.EmployeeId != empId).Select(task => new
                 {
@@ -427,7 +444,8 @@ namespace HRMSWithTheme.Controllers
                 var recFilter = data.Count;
                 //    //Pagination
                 var displayResult = data.Skip(start).Take(pageSize).ToList();
- 
+
+                
                 // Return JSON response
                 return Json(new
                 {

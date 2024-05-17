@@ -37,15 +37,30 @@ namespace HRMSWithTheme.Controllers
 
                 var data = entities.EmployeeMasters.ToList().Where(e => e.EmployeeId == sid).Select(emp => new
                 {
-                    EmployeeId = emp.EmployeeId,
-                    FirstName = emp.FirstName,
-                    LastName = emp.LastName,
-                    Gender = emp.Gender,
-                    ReportingPerson = emp.ReportingPerson,
-                    Email = emp.Email,
-                    Password = emp.Password,
-                    BirthDate = emp.BirthDate,
-                    DepartmentId = emp.DepartmentId,
+                    if (!string.IsNullOrEmpty(param.search.value))
+                    {
+                        emps = emps.Where(x => x.FirstName.ToLower().Contains(param.search.value.ToLower())
+                                    || x.EmployeeId.ToString().Contains(param.search.value.ToLower())
+                                    || x.ReportingPerson.ToString().Contains(param.search.value.ToLower())
+                                    || x.LastName.ToLower().Contains(param.search.value.ToLower())
+                                    || x.Gender.ToLower().Contains(param.search.value.ToLower()));
+                    }
+                }
+                var totalRecords = emps.Count();
+                List<object> result = new List<object>();
+                foreach (var emp in emps)
+                {
+                    EmployeeMaster employeeMaster = new EmployeeMaster
+                    {
+                        EmployeeId = emp.EmployeeId,
+                        FirstName = emp.FirstName,
+                        LastName = emp.LastName,
+                        Gender = emp.Gender,
+                        ReportingPerson = emp.ReportingPerson,
+                        Email = emp.Email,
+                        Password = emp.Password,
+                        BirthDate = emp.BirthDate,
+                        DepartmentId = emp.DepartmentId,
 
                 }).ToList();
 
@@ -250,18 +265,18 @@ namespace HRMSWithTheme.Controllers
                 string orderDir = Request.Form["order[0][dir]"];
 
                 var data = entities.TaskMasters.ToList().Where(x => x.EmployeeId == empId).Select(task => new
-                {
-                    TaskId = task.TaskId,
-                    TaskName = task.TaskName,
-                    EmployeeId = task.EmployeeId,
-                    TaskDescription = task.TaskDescription,
-                    TaskDate = task.TaskDate,
-                    ApprovedorRejectedBy = task.ApprovedorRejectedBy,
-                    ApprovedorRejectedOn = task.ApprovedorRejectedOn,
-                    CreatedOn = task.CreatedOn,
-                    ModifiedOn = task.ModifiedOn,
-                    ApproverId = task.ApproverId,
-                    Status = task.Status,
+                    {
+                        TaskId = task.TaskId,
+                        TaskName = task.TaskName,
+                        EmployeeId = task.EmployeeId,
+                        TaskDescription = task.TaskDescription,
+                        TaskDate = task.TaskDate,
+                        ApprovedorRejectedBy = task.ApprovedorRejectedBy,
+                        ApprovedorRejectedOn = task.ApprovedorRejectedOn,
+                        CreatedOn = task.CreatedOn,
+                        ModifiedOn = task.ModifiedOn,
+                        ApproverId = task.ApproverId,
+                        Status = task.Status,
 
                 }).ToList();
 

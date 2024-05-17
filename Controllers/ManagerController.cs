@@ -114,8 +114,8 @@ namespace HRMSWithTheme.Controllers
             }
             else
             {
-                ViewBag.EmployeeList = employeeList;
-                return PartialView("_EditOtherProfile", emp);
+            ViewBag.EmployeeList = employeeList;
+            return PartialView("_EditOtherProfile", emp);
             }
 
 
